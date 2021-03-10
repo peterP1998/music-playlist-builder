@@ -1,4 +1,4 @@
-package model
+package requests
 
 type UserCrednetials struct {
 	Username string `json:"user"`

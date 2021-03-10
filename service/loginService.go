@@ -1,9 +1,9 @@
 package service
 
 import (
-	"time"
 	"errors"
 	"github.com/dgrijalva/jwt-go"
+	"time"
 )
 
 type LoginServiceInterface interface {
@@ -49,9 +49,7 @@ func (service *LoginService) ValidateToken(encodedToken string) (*jwt.Token, err
 	return jwt.Parse(encodedToken, func(token *jwt.Token) (interface{}, error) {
 		if _, isvalid := token.Method.(*jwt.SigningMethodHMAC); !isvalid {
 			return nil, errors.New("Invalid token")
-
 		}
 		return []byte(service.secretKey), nil
 	})
-
 }

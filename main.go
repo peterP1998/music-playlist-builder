@@ -17,6 +17,7 @@ func main() {
 	var loginService service.LoginServiceInterface=service.LoginServiceAuth()
 	var loginController controller.LoginControllerInterface=controller.LoginControllerCreate(loginService,userService)
 	server.POST("/login", loginController.Login)
+	server.POST("/register", loginController.Register)
 	port := "8080"
 	server.Run(":" + port)
 
