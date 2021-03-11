@@ -21,7 +21,7 @@ func (ur UserRepositoryMock) SelectUserByName(username string) (model.User, erro
 	}
 }
 
-func (ur UserRepositoryMock) CreateUser(username string,password string,email string) error{
+func (ur UserRepositoryMock) CreateUser(username string, password string, email string) error {
 	if username == "test21" {
 		return nil
 	}

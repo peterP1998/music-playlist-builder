@@ -34,7 +34,7 @@ func TestAuthenticateUserWithExistingUserAndWrongCredentials(t *testing.T) {
 func TestRegisterUserWithExistingUser(t *testing.T) {
 	userRepositoryMock := mocks.UserRepositoryMock{}
 	userService := UserServiceCreate(userRepositoryMock)
-	register, err := userService.RegisterUser("test", "test1@test1.bg","test1")
+	register, err := userService.RegisterUser("test", "test1@test1.bg", "test1")
 	assert.Equal(t, false, register)
 	assert.Equal(t, nil, err)
 }
@@ -42,9 +42,7 @@ func TestRegisterUserWithExistingUser(t *testing.T) {
 func TestRegisterUserWithNonExistingUser(t *testing.T) {
 	userRepositoryMock := mocks.UserRepositoryMock{}
 	userService := UserServiceCreate(userRepositoryMock)
-	register, err := userService.RegisterUser("test21", "test1@test1.bg","test1")
+	register, err := userService.RegisterUser("test21", "test1@test1.bg", "test1")
 	assert.Equal(t, true, register)
 	assert.Equal(t, nil, err)
 }
-
-

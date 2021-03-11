@@ -2,10 +2,10 @@ package middleware
 
 import (
 	"fmt"
-	"net/http"
-	"github.com/peterP1998/music-playlist-builder/service"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
+	"github.com/peterP1998/music-playlist-builder/service"
+	"net/http"
 )
 
 func AuthorizeJWT() gin.HandlerFunc {

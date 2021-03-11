@@ -7,7 +7,7 @@ import (
 )
 
 type LoginServiceInterface interface {
-	GenerateToken(email string, isUser bool) string
+	GenerateToken(email string) (string, error)
 	ValidateToken(token string) (*jwt.Token, error)
 }
 
@@ -28,7 +28,7 @@ func LoginServiceAuth() LoginServiceInterface {
 	}
 }
 
-func (service *LoginService) GenerateToken(email string, isUser bool) string {
+func (service *LoginService) GenerateToken(email string) (string, error) {
 	claims := &authCustomClaims{
 		email,
 		jwt.StandardClaims{
@@ -40,9 +40,9 @@ func (service *LoginService) GenerateToken(email string, isUser bool) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	t, err := token.SignedString([]byte(service.secretKey))
 	if err != nil {
-		panic(err)
+		return "", err
 	}
-	return t
+	return t, nil
 }
 
 func (service *LoginService) ValidateToken(encodedToken string) (*jwt.Token, error) {
