@@ -35,7 +35,11 @@ func (controller *LoginController) Login(ctx *gin.Context) {
 	isUserAuthenticated, _ := controller.userService.AuthenticateUser(credential.Username, credential.Password)
 	token := ""
 	if isUserAuthenticated {
-		token = controller.loginService.GenerateToken(credential.Username)
+		token, err = controller.loginService.GenerateToken(credential.Username)
+		if err != nil {
+			ctx.JSON(500, nil)
+			return
+		}
 	}
 	if token != "" {
 		ctx.JSON(http.StatusOK, gin.H{
@@ -55,7 +59,9 @@ func (controller *LoginController) Register(ctx *gin.Context) {
 	}
 	register, err := controller.userService.RegisterUser(userRequest.Username, userRequest.Email, userRequest.Password)
 	if !register || err != nil {
-		fmt.Println(err)
+		if fmt.Sprint(err) == "User already exists" {
+			ctx.JSON(400, "User already exists!")
+		}
 		ctx.JSON(500, "Something went wrong!")
 		return
 	}

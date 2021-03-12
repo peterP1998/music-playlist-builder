@@ -1,7 +1,7 @@
 package service
 
 import (
-	"fmt"
+	"errors"
 	"github.com/peterP1998/music-playlist-builder/model"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -39,7 +39,7 @@ func (userService *UserService) AuthenticateUser(username string, password strin
 func (userService *UserService) RegisterUser(username string, email string, password string) (bool, error) {
 	exist, err := checkDoesUserAlreadyExists(userService, username)
 	if err != nil || exist {
-		return false, err
+		return false, errors.New("User already exists")
 	}
 	hashPassword, err := hashPassword(password)
 	if err != nil {
@@ -54,7 +54,7 @@ func (userService *UserService) RegisterUser(username string, email string, pass
 
 func checkDoesUserAlreadyExists(userService *UserService, username string) (bool, error) {
 	_, err := userService.userRepository.SelectUserByName(username)
-	if err != nil || fmt.Sprint(err) == "sql: no rows in result set" {
+	if err != nil {
 		return false, nil
 	}
 	return true, nil
