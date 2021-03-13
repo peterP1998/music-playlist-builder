@@ -7,7 +7,7 @@ import (
 type SongRepository struct {
 }
 
-func (songRepository SongRepository) CreateSong(name string,length float64,genre string,artistId int64) error {
+func (songRepository SongRepository) CreateSong(name string,length float64,genre string,artistId int) error {
 	_, err := model.DB.Query("insert into Song(name,length,genre,artist_id) Values(?,?,?,?);", name,length,genre,artistId)
 	if err != nil {
 		return err

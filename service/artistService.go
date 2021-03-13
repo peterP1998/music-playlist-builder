@@ -1,9 +1,9 @@
 package service
 
 import (
+	"errors"
 	"fmt"
 	"github.com/peterP1998/music-playlist-builder/model"
-	"errors"
 )
 
 type ArtistRepositoryInterface interface {
@@ -13,7 +13,7 @@ type ArtistRepositoryInterface interface {
 
 type ArtistServiceInterface interface {
 	CreateArtist(name string) error
-	GetArtist(name string) (model.Artist,error)
+	GetArtist(name string) (model.Artist, error)
 }
 
 type ArtistService struct {
@@ -30,7 +30,7 @@ func (artistService *ArtistService) CreateArtist(name string) error {
 	if err != nil && fmt.Sprint(err) != "sql: no rows in result set" {
 		return err
 	}
-	if (artist!=model.Artist{}) {
+	if (artist != model.Artist{}) {
 		return errors.New("Artist already exists!")
 	}
 	err = artistService.artistRepository.CreateArtist(name)
@@ -40,10 +40,10 @@ func (artistService *ArtistService) CreateArtist(name string) error {
 	return nil
 }
 
-func (artistService *ArtistService) GetArtist(name string) (model.Artist,error) {
+func (artistService *ArtistService) GetArtist(name string) (model.Artist, error) {
 	artist, err := artistService.artistRepository.SelectArtistByName(name)
 	if err != nil {
-		return artist,err
+		return artist, err
 	}
-	return artist,nil
+	return artist, nil
 }

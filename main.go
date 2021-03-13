@@ -23,6 +23,9 @@ func main() {
 	songRepository:=repository.SongRepository{}
 	songService:=service.SongServiceCreate(songRepository)
 	songController:=controller.SongControllerCreate(artistService,songService)
+	playlistRepository:=repository.PlaylistRepository{}
+	playlistService:=service.PlaylistServiceCreate(playlistRepository)
+	playlistController:=controller.PlaylistControllerCreate(playlistService,songService)
 	server.POST("/login", loginController.Login)
 	server.POST("/register", loginController.Register)
 	artistRoutes := server.Group("/artist") 
@@ -32,6 +35,11 @@ func main() {
 	songRoutes := server.Group("/song") 
 	{
 		songRoutes.POST("/create", middleware.AuthorizeJWT(),songController.SongCreate)
+	}
+	playlistRoutes := server.Group("/playlist") 
+	{
+		playlistRoutes.POST("/create", middleware.AuthorizeJWT(),playlistController.PlaylistCreate)
+		playlistRoutes.POST("/song/add", middleware.AuthorizeJWT(),playlistController.AddSongToPlaylist)
 	}
 	port := "8080"
 	server.Run(":" + port)
