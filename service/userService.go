@@ -14,6 +14,7 @@ type UserRepositoryInterface interface {
 type UserServiceInterface interface {
 	AuthenticateUser(username string, password string) (bool, error)
 	RegisterUser(username string, email string, password string) (bool, error)
+	GetUser(username string) (model.User, error)
 }
 
 type UserService struct {
@@ -50,6 +51,14 @@ func (userService *UserService) RegisterUser(username string, email string, pass
 		return false, err
 	}
 	return true, nil
+}
+
+func (userService *UserService) GetUser(username string) (model.User, error) {
+	user, err := userService.userRepository.SelectUserByName(username)
+	if err != nil {
+		return user, err
+	}
+	return user, nil
 }
 
 func checkDoesUserAlreadyExists(userService *UserService, username string) (bool, error) {

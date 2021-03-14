@@ -36,3 +36,11 @@ create table PlaylistSong(
    FOREIGN KEY (playlist_id) REFERENCES Playlist(id),
    FOREIGN KEY (song_id) REFERENCES Song(id)
 );
+create table LikedSong(
+   id INT NOT NULL AUTO_INCREMENT,
+   user_id INT NOT NULL,
+   song_id INT NOT NULL,
+   primary key(id),
+   FOREIGN KEY (user_id) REFERENCES User(id),
+   FOREIGN KEY (song_id) REFERENCES Song(id)
+); 

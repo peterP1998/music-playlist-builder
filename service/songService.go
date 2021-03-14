@@ -9,11 +9,16 @@ import (
 type SongRepositoryInterface interface {
 	CreateSong(name string, length float64, genre string, artistId int) error
 	SelectSongByName(name string) (model.Song, error)
+	AddLikedSong(userid int, songid int) error
+	SelectSongById(id int) (model.Song, error)
+	SelectAllByUserId(userid int) ([]int, error)
 }
 
 type SongServiceInterface interface {
 	CreateSong(name string, length float64, genre string, artistId int) error
 	GetSong(name string) (model.Song, error)
+	LikeSong(userId int, song string) error
+	GetLikedSongs(userId int) ([]model.Song, error)
 }
 
 type SongService struct {
@@ -48,3 +53,32 @@ func (songService *SongService) GetSong(name string) (model.Song, error) {
 	}
 	return song, nil
 }
+
+func (songService *SongService) LikeSong(userId int, songname string) error {
+	song, err := songService.songRepository.SelectSongByName(songname)
+	if err != nil {
+		return err
+	}
+	err = songService.songRepository.AddLikedSong(userId, song.Id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (songService *SongService) GetLikedSongs(userId int) ([]model.Song, error) {
+	songIds, err := songService.songRepository.SelectAllByUserId(userId)
+	if err != nil {
+		return nil, err
+	}
+	songs := make([]model.Song, 0)
+	for _, id := range songIds {
+		song, err := songService.songRepository.SelectSongById(id)
+		if err != nil {
+			return nil, err
+		}
+		songs = append(songs, song)
+	}
+	return songs, nil
+}
+

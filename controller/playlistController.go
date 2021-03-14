@@ -11,17 +11,18 @@ import (
 type PlaylistControllerInterface interface {
 	PlaylistCreate(ctx *gin.Context)
 	AddSongToPlaylist(ctx *gin.Context)
+	GetSongsFromPlaylist(ctx *gin.Context)
 }
 
 type PlaylistController struct {
 	playlistService service.PlaylistServiceInterface
-	songService service.SongServiceInterface
+	songService     service.SongServiceInterface
 }
 
-func PlaylistControllerCreate(playlistService service.PlaylistServiceInterface,songService service.SongServiceInterface) PlaylistControllerInterface {
+func PlaylistControllerCreate(playlistService service.PlaylistServiceInterface, songService service.SongServiceInterface) PlaylistControllerInterface {
 	return &PlaylistController{
 		playlistService: playlistService,
-		songService:songService,
+		songService:     songService,
 	}
 }
 
@@ -52,12 +53,33 @@ func (playlistController *PlaylistController) AddSongToPlaylist(ctx *gin.Context
 		ctx.JSON(400, "Parameters are not ok.")
 		return
 	}
-	song,err := playlistController.songService.GetSong(playlistSong.SongName)
+	song, err := playlistController.songService.GetSong(playlistSong.SongName)
 	if err != nil {
 		ctx.JSON(500, "Song doesnt exists!")
 		return
 	}
-	err = playlistController.playlistService.AddSongToPlaylist(playlistSong.PlaylistName,song.Id,song.Length)
+	err = playlistController.playlistService.AddSongToPlaylist(playlistSong.PlaylistName, song.Id, song.Length)
+	if err != nil {
+		fmt.Println(err)
+		ctx.JSON(500, "Something went wrong!")
+		return
+	}
+	ctx.JSON(200, "Song added!")
+}
+
+func (playlistController *PlaylistController) GetSongsFromPlaylist(ctx *gin.Context) {
+	var playlistSong requests.PlaylistSong
+	err := ctx.ShouldBindJSON(&playlistSong)
+	if err != nil {
+		ctx.JSON(400, "Parameters are not ok.")
+		return
+	}
+	song, err := playlistController.songService.GetSong(playlistSong.SongName)
+	if err != nil {
+		ctx.JSON(500, "Song doesnt exists!")
+		return
+	}
+	err = playlistController.playlistService.AddSongToPlaylist(playlistSong.PlaylistName, song.Id, song.Length)
 	if err != nil {
 		fmt.Println(err)
 		ctx.JSON(500, "Something went wrong!")

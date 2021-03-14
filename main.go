@@ -22,7 +22,7 @@ func main() {
 	artistController:=controller.ArtistControllerCreate(artistService)
 	songRepository:=repository.SongRepository{}
 	songService:=service.SongServiceCreate(songRepository)
-	songController:=controller.SongControllerCreate(artistService,songService)
+	songController:=controller.SongControllerCreate(artistService,songService,userService)
 	playlistRepository:=repository.PlaylistRepository{}
 	playlistService:=service.PlaylistServiceCreate(playlistRepository)
 	playlistController:=controller.PlaylistControllerCreate(playlistService,songService)
@@ -35,6 +35,8 @@ func main() {
 	songRoutes := server.Group("/song") 
 	{
 		songRoutes.POST("/create", middleware.AuthorizeJWT(),songController.SongCreate)
+		songRoutes.POST("/like", middleware.AuthorizeJWT(),songController.LikeSong)
+		songRoutes.GET("/like", middleware.AuthorizeJWT(),songController.GetLikedSongs)
 	}
 	playlistRoutes := server.Group("/playlist") 
 	{

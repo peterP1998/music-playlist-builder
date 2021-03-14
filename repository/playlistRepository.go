@@ -23,6 +23,20 @@ func (playlistRepository PlaylistRepository) AddSongToPlaylist(playlistId int,so
 	return nil
 }
 
+func (songRepository SongRepository) SelectAllByPlaylistId(playlistid int)  ([]int,error){
+	res, err := model.DB.Query("SELECT song_id FROM PlaylistSong where playlist_id=?",playlistid)
+	if err != nil {
+		return nil, err
+	}
+	songs := make([]int, 0)
+	for res.Next() {
+		var songId int
+		res.Scan(&songId)
+		songs = append(songs, songId)
+	}
+	return songs, nil
+}
+
 func (playlistRepository PlaylistRepository) UpdatePlaylist(name string,id int,length float64,numberOfSongs int) error {
 	_, err := model.DB.Query("update Playlist SET name=?,length=?,numberOfSongs=? where id=?;", name,length,numberOfSongs,id)
 	if err != nil {
