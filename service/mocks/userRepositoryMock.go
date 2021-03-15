@@ -13,7 +13,7 @@ func (ur UserRepositoryMock) SelectUserByName(username string) (model.User, erro
 	if username == "test" {
 		return getUser(1, "test", "test", "test@test.bg"), nil
 	} else if username == "test1" {
-		return getUser(2, "test1", "test1", "test1@test1.bg"), nil
+		return getUser(2, "test1", "$2a$10$gR4SkW.ERpYenqrG16eQxe3eSe8Qkuq3FDRG0d14F5KKVagtc3F7e", "test1@test1.bg"), nil
 	} else if username == "test2" {
 		return user, errors.New("User not found")
 	} else {
@@ -28,7 +28,7 @@ func (ur UserRepositoryMock) CreateUser(username string, password string, email 
 	return errors.New("User is not created")
 }
 
-func getUser(id int64, username string, pass string, email string) model.User {
+func getUser(id int, username string, pass string, email string) model.User {
 	var user model.User
 	user.Id = id
 	user.Username = username

@@ -22,13 +22,13 @@ type PlaylistServiceInterface interface {
 
 type PlaylistService struct {
 	playlistRepository PlaylistRepositoryInterface
-	songRepository SongRepositoryInterface
+	songRepository     SongRepositoryInterface
 }
 
-func PlaylistServiceCreate(playlistRepository PlaylistRepositoryInterface,songRepository SongRepositoryInterface) PlaylistServiceInterface {
+func PlaylistServiceCreate(playlistRepository PlaylistRepositoryInterface, songRepository SongRepositoryInterface) PlaylistServiceInterface {
 	return &PlaylistService{
 		playlistRepository: playlistRepository,
-		songRepository:songRepository,
+		songRepository:     songRepository,
 	}
 }
 
@@ -80,5 +80,5 @@ func (playlistService *PlaylistService) GetAllSongsFromPlaylist(playlistname str
 		}
 		songs = append(songs, song)
 	}
-	return songs,nil
+	return songs, nil
 }

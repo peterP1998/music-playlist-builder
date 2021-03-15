@@ -68,22 +68,18 @@ func (playlistController *PlaylistController) AddSongToPlaylist(ctx *gin.Context
 }
 
 func (playlistController *PlaylistController) GetSongsFromPlaylist(ctx *gin.Context) {
-	var playlistSong requests.PlaylistSong
-	err := ctx.ShouldBindJSON(&playlistSong)
+	var playlist requests.PlaylistName
+	err := ctx.BindQuery(&playlist)
 	if err != nil {
 		ctx.JSON(400, "Parameters are not ok.")
 		return
 	}
-	song, err := playlistController.songService.GetSong(playlistSong.SongName)
-	if err != nil {
-		ctx.JSON(500, "Song doesnt exists!")
-		return
-	}
-	err = playlistController.playlistService.AddSongToPlaylist(playlistSong.PlaylistName, song.Id, song.Length)
+	fmt.Println(ctx.Query("name"))
+	songs, err := playlistController.playlistService.GetAllSongsFromPlaylist(ctx.Query("name"))
 	if err != nil {
 		fmt.Println(err)
 		ctx.JSON(500, "Something went wrong!")
 		return
 	}
-	ctx.JSON(200, "Song added!")
+	ctx.JSON(200, songs)
 }

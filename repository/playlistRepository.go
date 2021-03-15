@@ -23,7 +23,7 @@ func (playlistRepository PlaylistRepository) AddSongToPlaylist(playlistId int,so
 	return nil
 }
 
-func (songRepository SongRepository) SelectAllByPlaylistId(playlistid int)  ([]int,error){
+func (playlistRepository PlaylistRepository) SelectAllByPlaylistId(playlistid int)  ([]int,error){
 	res, err := model.DB.Query("SELECT song_id FROM PlaylistSong where playlist_id=?",playlistid)
 	if err != nil {
 		return nil, err
@@ -47,7 +47,7 @@ func (playlistRepository PlaylistRepository) UpdatePlaylist(name string,id int,l
 
 func (playlistRepository PlaylistRepository) SelectPlaylistByName(name string) (model.Playlist, error) {
 	var playlist model.Playlist
-	err := model.DB.QueryRow("SELECT * FROM Playlist where name=?", name).Scan(&playlist.Id, &playlist.Name,&playlist.Length,&playlist.NumberOfSongs)
+	err := model.DB.QueryRow("SELECT * FROM Playlist where name=?", name).Scan(&playlist.Id, &playlist.Name,&playlist.NumberOfSongs,&playlist.Length)
 	if err != nil {
 		return playlist, err
 	}

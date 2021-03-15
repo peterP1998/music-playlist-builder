@@ -81,4 +81,3 @@ func (songService *SongService) GetLikedSongs(userId int) ([]model.Song, error) 
 	}
 	return songs, nil
 }
-

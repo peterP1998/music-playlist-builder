@@ -62,8 +62,8 @@ func (userService *UserService) GetUser(username string) (model.User, error) {
 }
 
 func checkDoesUserAlreadyExists(userService *UserService, username string) (bool, error) {
-	_, err := userService.userRepository.SelectUserByName(username)
-	if err != nil {
+	user, err := userService.userRepository.SelectUserByName(username)
+	if err != nil || (model.User{} == user) {
 		return false, nil
 	}
 	return true, nil
