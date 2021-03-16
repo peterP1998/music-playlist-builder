@@ -12,8 +12,6 @@ func (ur ArtistRepositoryMock) SelectArtistByName(name string) (model.Artist, er
 	var artist model.Artist
 	if name == "test" {
 		return getArtist(1, "test"), nil
-	} else if name == "test1" {
-		return getArtist(2, "test1"), nil
 	} else if name == "test2" {
 		return artist, errors.New("Artist not found")
 	} else {

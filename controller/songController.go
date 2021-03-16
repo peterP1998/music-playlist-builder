@@ -3,6 +3,7 @@ package controller
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/peterP1998/music-playlist-builder/model"
 	"github.com/peterP1998/music-playlist-builder/model/requests"
 	"github.com/peterP1998/music-playlist-builder/service"
 )
@@ -37,7 +38,7 @@ func (songController *SongController) SongCreate(ctx *gin.Context) {
 		return
 	}
 	artist, err := songController.artistService.GetArtist(songCreate.ArtistName)
-	if err != nil {
+	if err != nil || (artist==model.Artist{}){
 		ctx.JSON(500, "Artist not exists!")
 		return
 	}
@@ -84,7 +85,7 @@ func (songController *SongController) GetLikedSongs(ctx *gin.Context) {
 		ctx.JSON(500, "Something went wrong!")
 		return
 	}
-	songs,err := songController.songService.GetLikedSongs(user.Id)
+	songs, err := songController.songService.GetLikedSongs(user.Id)
 	if err != nil {
 		fmt.Println(err)
 		ctx.JSON(500, "Something went wrong!")
@@ -94,5 +95,3 @@ func (songController *SongController) GetLikedSongs(ctx *gin.Context) {
 		return
 	}
 }
-
-

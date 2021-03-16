@@ -54,13 +54,12 @@ func (playlistController *PlaylistController) AddSongToPlaylist(ctx *gin.Context
 		return
 	}
 	song, err := playlistController.songService.GetSong(playlistSong.SongName)
-	if err != nil {
-		ctx.JSON(500, "Song doesnt exists!")
+	if err != nil || (model.Song{}==song) {
+		ctx.JSON(400, "Song doesnt exists!")
 		return
 	}
 	err = playlistController.playlistService.AddSongToPlaylist(playlistSong.PlaylistName, song.Id, song.Length)
 	if err != nil {
-		fmt.Println(err)
 		ctx.JSON(500, "Something went wrong!")
 		return
 	}
@@ -74,10 +73,8 @@ func (playlistController *PlaylistController) GetSongsFromPlaylist(ctx *gin.Cont
 		ctx.JSON(400, "Parameters are not ok.")
 		return
 	}
-	fmt.Println(ctx.Query("name"))
 	songs, err := playlistController.playlistService.GetAllSongsFromPlaylist(ctx.Query("name"))
 	if err != nil {
-		fmt.Println(err)
 		ctx.JSON(500, "Something went wrong!")
 		return
 	}

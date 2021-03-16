@@ -27,7 +27,7 @@ func (ur PlaylistRepositoryMock) CreatePlaylist(name string) error {
 }
 
 func (ur PlaylistRepositoryMock) UpdatePlaylist(name string, id int, length float64, numberOfSongs int) error {
-	if name == "test1" {
+	if name == "test1" || name == "test" {
 		return nil
 	}
 	return errors.New("Playlist is not updated")

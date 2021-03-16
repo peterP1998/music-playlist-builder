@@ -66,7 +66,10 @@ func (playlistService *PlaylistService) AddSongToPlaylist(name string, songId in
 func (playlistService *PlaylistService) GetAllSongsFromPlaylist(playlistname string) ([]model.Song, error) {
 	playlist, err := playlistService.playlistRepository.SelectPlaylistByName(playlistname)
 	if err != nil {
-		return nil, err
+		return nil,err
+	}
+	if (playlist==model.Playlist{}) {
+		return nil, errors.New("Playlist not exists")
 	}
 	songIds, err := playlistService.playlistRepository.SelectAllByPlaylistId(playlist.Id)
 	if err != nil {
