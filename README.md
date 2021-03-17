@@ -7,7 +7,7 @@ Music Playlist application is simple REST API written in golang using gin framew
 
 # Instalation
 1. The First step is to clone this repo on your pc 
-``` git clone https://github.com/peterP1998/CostManagementSystem.git ```
+``` https://github.com/peterP1998/music-playlist-builder.git ```
 2. The Second step is to install mysql on your pc
 3. You can find example configuration of db in db.yaml file. If your db runs on different port or something else is different for your db,
 you should make a change in db.yaml file. 
@@ -17,18 +17,18 @@ you should make a change in db.yaml file.
 # Endpoints
 I will list all the endpoints which this application has.
 
-## Post Requests
-/register - this endpoint register new user 
-/login - this endpoint checks does this user was already register and returns jwt token
-/artist/create - create new artist ex.AC/DC,The Beatles or Tina Turner
-/song/create - create new song for artist
-/song/like - add song to your list of liked songs
-/playlist/create - create playlist of song
-/playlist/song/add - add song to the playlist
+### Post Requests
+/register - this endpoint register new user <br>
+/login - this endpoint checks does this user was already register and returns jwt token  <br>
+/artist/create - create new artist ex.AC/DC,The Beatles or Tina Turner  <br>
+/song/create - create new song for artist  <br>
+/song/like - add song to your list of liked songs  <br>
+/playlist/create - create playlist of song  <br>
+/playlist/song/add - add song to the playlist  <br>
 
-## Get Requests
-/song/like - get all of your liked songs
-/playlist?name=* - get all songs for playlist
+### Get Requests
+/song/like - get all of your liked songs  <br>
+/playlist?name=* - get all songs for playlist  <br>
 
 # Final Words
 I created this project to learn basics of gin framework.
