@@ -7,7 +7,7 @@ Music Playlist application is simple REST API written in golang using gin framew
 
 # Instalation
 1. The First step is to clone this repo on your pc 
-''' git clone https://github.com/peterP1998/CostManagementSystem.git '''
+``` git clone https://github.com/peterP1998/CostManagementSystem.git ```
 2. The Second step is to install mysql on your pc
 3. You can find example configuration of db in db.yaml file. If your db runs on different port or something else is different for your db,
 you should make a change in db.yaml file. 
@@ -15,4 +15,21 @@ you should make a change in db.yaml file.
 5. To run the application you should type go run main.go. The server will run on port 8080
 
 # Endpoints
+I will list all the endpoints which this application has.
+
+## Post Requests
+/register - this endpoint register new user 
+/login - this endpoint checks does this user was already register and returns jwt token
+/artist/create - create new artist ex.AC/DC,The Beatles or Tina Turner
+/song/create - create new song for artist
+/song/like - add song to your list of liked songs
+/playlist/create - create playlist of song
+/playlist/song/add - add song to the playlist
+
+## Get Requests
+/song/like - get all of your liked songs
+/playlist?name=* - get all songs for playlist
+
+# Final Words
+I created this project to learn basics of gin framework.
 
