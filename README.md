@@ -1,12 +1,18 @@
 #  Music Playlist
 > Technologies used Golang,Gin and MySql
 
-[![Build Status][travis-image]][travis-url]
-[![codebeat badge](https://codebeat.co/badges/ed248580-942c-4ffc-919f-d3681d28a799)](https://codebeat.co/projects/github-com-vsouza-go-gin-boilerplate)
-[![Go Version][go-image]][go-url]
-[![License][license-image]][license-url]
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fvsouza%2Fgo-gin-boilerplate.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fvsouza%2Fgo-gin-boilerplate?ref=badge_shield)
+![](gopher.jpg)
 
-![](header.jpg)
+Music Playlist application is simple REST API written in golang using gin framework for educational purposes. In this application you can create artist,create song,like song and create playlist of your favourite songs.
 
-Instalation
+# Instalation
+1. The First step is to clone this repo on your pc 
+''' git clone https://github.com/peterP1998/CostManagementSystem.git '''
+2. The Second step is to install mysql on your pc
+3. You can find example configuration of db in db.yaml file. If your db runs on different port or something else is different for your db,
+you should make a change in db.yaml file. 
+4. Then execute db.sql file to create the database
+5. To run the application you should type go run main.go. The server will run on port 8080
+
+# Endpoints
+
