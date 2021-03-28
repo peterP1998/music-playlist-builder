@@ -8,7 +8,7 @@ import (
 func main() {
 	model.InitDb()
 	server := routes.InitRouter()
-	port := "8080"
+	port := "8000"
 	server.Run(":" + port)
 
 }
